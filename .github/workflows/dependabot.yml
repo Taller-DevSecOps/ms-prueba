@@ -1,0 +1,41 @@
+name: Dependabot Alerts Today
+
+on:
+  workflow_dispatch:  
+  schedule:
+    - cron: '0 12 * * *'  
+
+jobs:
+  get-todays-dependabot-alerts:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: read  
+
+    steps:
+      - name: Obtener alertas creadas hoy
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const org = 'TU_ORG_AQUI'; // Reemplaza con tu organización
+            const alerts = await github.paginate(
+              github.rest.dependabot.listAlertsForOrg,
+              {
+                org,
+                per_page: 100,
+                state: "open"
+              }
+            );
+
+            const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD en UTC
+            const todaysAlerts = alerts.filter(alert =>
+              alert.created_at.startsWith(today)
+            );
+
+            if (todaysAlerts.length === 0) {
+              console.log("✅ No hay nuevas alertas de Dependabot hoy.");
+            } else {
+              console.log(🚨 ${todaysAlerts.length} nuevas alertas creadas hoy:\n);
+              for (const alert of todaysAlerts) {
+                console.log(- ${alert.security_advisory.summary} (${alert.dependency.package.ecosystem}));
+              }
+            }
