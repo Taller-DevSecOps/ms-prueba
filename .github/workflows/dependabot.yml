@@ -6,8 +6,7 @@ on:
 jobs:
   get-todays-dependabot-alerts:
     runs-on: ubuntu-latest
-    permissions:
-      security-events: read  
+    permissions: read-all
 
     steps:
       - name: Obtener alertas de Dependabot creadas hoy
