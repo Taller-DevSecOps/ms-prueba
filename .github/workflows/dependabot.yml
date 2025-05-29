@@ -32,6 +32,16 @@ jobs:
             } else {
               console.log(`🚨 ${todaysAlerts.length} nuevas alertas creadas hoy:\n`);
               todaysAlerts.forEach(alert => {
-                console.log(`- ${alert.security_advisory.summary} [${alert.dependency.package.ecosystem}]`);
+                const advisory = alert.security_advisory;
+                const cve = advisory.identifiers.find(id => id.type === 'CVE')?.value || 'Sin CVE';
+                const severity = advisory.severity || 'Desconocida';
+                const cvss = advisory.cvss?.score || 'No disponible';
+                const summary = advisory.summary;
+                const ecosystem = alert.dependency.package.ecosystem;
+
+                console.log('- ${summary} [${ecosystem}]');
+                console.log('  📛 CVE: ${cve}');
+                console.log('  ⚠️ Severidad: ${severity}');
+                console.log('  🧮 CVSS: ${cvss}\n');
               });
             }
