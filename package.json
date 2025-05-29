@@ -1,0 +1,12 @@
+{
+  "name": "vulnerable-project",
+  "version": "1.0.0",
+  "description": "Proyecto de prueba con dependencia vulnerable",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "lodash": "4.17.20"
+  }
+}
