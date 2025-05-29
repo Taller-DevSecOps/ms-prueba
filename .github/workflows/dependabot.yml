@@ -39,9 +39,9 @@ jobs:
                 const summary = advisory.summary;
                 const ecosystem = alert.dependency.package.ecosystem;
 
-                console.log('- ${summary} [${ecosystem}]');
-                console.log('  📛 CVE: ${cve}');
-                console.log('  ⚠️ Severidad: ${severity}');
-                console.log('  🧮 CVSS: ${cvss}\n');
+                console.log(`- ${summary} [${ecosystem}]`);
+                console.log(`  📛 CVE: ${cve}`);
+                console.log(`  ⚠️ Severidad: ${severity}`);
+                console.log(`  🧮 CVSS: ${cvss}\n`);
               });
             }
